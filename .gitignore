@@ -1,0 +1,30 @@
+# Environnement virtuel
+venv/
+*.pyc
+__pycache__/
+
+# Configuration de l'IDE
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log
+
+# Fichiers temporaires
+*.tmp
+
+# Fichiers de base de données locaux
+*.sqlite3
+
+# Secrets
+.env
+
+# Cache
+.cache/
+*.egg-info/
+dist/
+build/
+
+# Autres
+.DS_Store
