@@ -22,8 +22,10 @@ def create_app():
     jwt.init_app(app)
     migrate.init_app(app, db)
 
-    # Importer les routes
     from app.routes.auth import auth_blueprint
+    from app.routes.tasks import tasks_blueprint
+
     app.register_blueprint(auth_blueprint)
+    app.register_blueprint(tasks_blueprint)
 
     return app
