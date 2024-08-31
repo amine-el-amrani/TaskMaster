@@ -5,21 +5,21 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 tasks_blueprint = Blueprint('task', __name__)
 
-
 @tasks_blueprint.route('/tasks', methods=['POST'])
 @jwt_required()
 def create_task():
     user_id = get_jwt_identity()
     data = request.get_json()
     new_task = Task(
-        title=data['title'], 
-        description=data['description'], 
+        title=data['title'],
+        description=data['description'],
         priority=data.get('priority', 'Medium'),
-        due_date=data['due_date'], 
-        user_id=user_id)
+        due_date=data.get('due_date'),
+        user_id=user_id
+    )
     db.session.add(new_task)
     db.session.commit()
-    return jsonify(new_task.id), 201
+    return jsonify({'id': new_task.id}), 201
 
 @tasks_blueprint.route('/tasks/<int:task_id>', methods=['PUT'])
 @jwt_required()
@@ -49,4 +49,13 @@ def delete_task(task_id):
 def get_tasks():
     user_id = get_jwt_identity()
     tasks = Task.query.filter_by(user_id=user_id).all()
-    return jsonify([task.to_dict() for task in tasks]), 200
+    tasks_list = [{
+        'id': task.id,
+        'title': task.title,
+        'description': task.description,
+        'priority': task.priority,
+        'is_completed': task.is_completed,
+        'due_date': task.due_date.strftime('%Y-%m-%d') if task.due_date else None,
+        'user_id': task.user_id
+    } for task in tasks]
+    return jsonify(tasks_list), 200
