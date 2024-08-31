@@ -28,3 +28,4 @@ build/
 
 # Autres
 .DS_Store
+.coverage
