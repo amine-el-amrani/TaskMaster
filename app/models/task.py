@@ -6,7 +6,7 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), nullable=False)
     description = db.Column(db.Text, nullable=True)
-    pripority = db.Column(db.String(50), nullable=False, default='Medium')
+    priority = db.Column(db.String(50), nullable=False, default='Medium')
     is_completed = db.Column(db.Boolean, default=False)
     due_date = db.Column(db.DateTime, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
